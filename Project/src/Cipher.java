@@ -15,7 +15,7 @@ public class Cipher extends HttpServlet
 			decval += (decval >= 0) ? startdec : startdec+26;
 			encrypted += (char) decval;
 		}
-		return encrypted;
+		return(encrypted);
 	}
 
 	public void init() throws ServletException {
@@ -25,31 +25,31 @@ public class Cipher extends HttpServlet
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("text/html");
 		PrintWriter out = res.getWriter();
-		cryptoText = req.getParameter("name");
-		out.println("<h4><i>Text to encrypt: </i></h4><input type='text' id='name'>");
-		//out.println("<input type='submit' value='Submit' id='submit'>");
-		// try {
-		// 	if(cryptoText.matches("[a-zA-Z]+")) {
-		// 		int shift = textShift;
-		// 		out.println("<h1>Text : </h1>" + "<h3>"+ cryptoText + "</h3>");
-		// 		out.println("Shift : " + shift);
-		// 		out.println("Cipher: " + encryptText(cryptoText, textShift));
-		// 	}
-		// 	else {
-		// 		out.println("Text must be letters only.");
-		// 		return;
-		// 	}
-			
-		// }
-		// catch(Exception e) {
-		// 	out.println("Invalid input: " + e);
-		// }
-	}
-
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		PrintWriter out = res.getWriter();
-		cryptoText = req.getParameter("name");
-		System.out.println("<h1>"+ cryptoText +"</h1>");
+		out.println("<form action='./encrypt' method='GET'>");
+			out.println("<h3>Text to encrypt:</h3>");
+			out.println("<input required type='text' name='encryptedText' id='textInput'>");
+			out.println("<h3>Number of shifts:</h3>");
+			out.println("<input min='-255' max='255' step='1' required type='number' id='num_id' name='shiftNumber'/>");
+			out.println("<input type='submit' value='Submit' id='submit'>");
+		out.println("</form>");
+		cryptoText = req.getParameter("encryptedText");
+		String aString = req.getParameter("shiftNumber");
+		textShift = Integer.parseInt(aString);
+		try {
+			if(cryptoText.matches("[a-zA-Z]+")) {
+				int shift = textShift;
+				out.println("<h1>Text : </h1>" + "<h3>"+ cryptoText + "</h3>");
+				out.println("Shift : " + shift);
+				out.println("Cipher: " + encryptText(cryptoText, shift));
+			}
+			else {
+				out.println("Text must be letters only.");
+				return;
+			}
+		}
+		catch(Exception e) {
+			out.println("Invalid input: " + e);
+		}
 	}
 
 	public void destroy() {

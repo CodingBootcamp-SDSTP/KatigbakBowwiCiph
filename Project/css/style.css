@@ -1,0 +1,32 @@
+body {
+	background-image: url("http://cdn.wonderfulengineering.com/wp-content/uploads/2014/04/code-wallpaper-10.jpg");
+	background-size: 12cm 17cm;
+	background-repeat: no-repeat;
+}
+
+form {
+	position: relative;
+	top: 5cm;
+	left: 1.5cm;
+	opacity: 0.8;
+}
+
+#submit {
+	background-color: #FFA500;
+	color: #FFFFFF;
+	font-size: 15px;
+	font-weight: bold;
+	font-style: italic;
+	padding: 0.2cm;
+	margin-top: 0.5cm;
+	position: relative;
+	left: 4.5cm;
+}
+
+#name, #password {
+	background-color: #FFFFCC;
+}
+
+i {
+	color: #FFFFFF;
+}

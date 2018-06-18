@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<web-app>
+	<display-name>Caesar Cipher Generator</display-name>
+	<description>Project app for Level 1 developed by Bowwi Katigbak</description>
+	<servlet>
+		<servlet-name>CipherServlet</servlet-name>
+		<servlet-class>Cipher</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CipherServlet</servlet-name>
+		<url-pattern>/encrypt</url-pattern>
+	</servlet-mapping>
+</web-app>

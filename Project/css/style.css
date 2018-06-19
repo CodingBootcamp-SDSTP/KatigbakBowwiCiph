@@ -1,6 +1,6 @@
 body {
 	background-image: url("http://cdn.wonderfulengineering.com/wp-content/uploads/2014/04/code-wallpaper-10.jpg");
-	background-size: 12cm 17cm;
+	background-size: inherit;
 	background-repeat: no-repeat;
 }
 
@@ -12,7 +12,7 @@ form {
 }
 
 #submit {
-	background-color: #FFA500;
+	background-color: rgb(33, 88, 240);
 	color: #FFFFFF;
 	font-size: 15px;
 	font-weight: bold;

@@ -10,7 +10,7 @@
 		<br />
 		<i>Pass&ensp;: </i> <input type="password" id="password">
 		<br />
-		<input type="submit" value="Submit" id="submit">
+		<a href="#" onclick="Click"><input type="submit" value="Submit" id="submit"></a>
 	</form>
 	</body>
 </html>

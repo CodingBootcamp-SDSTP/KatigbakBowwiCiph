@@ -10,4 +10,12 @@
 		<servlet-name>Cipher</servlet-name>
 		<url-pattern>/encrypt</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>Data</servlet-name>
+		<servlet-class>Data</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Data</servlet-name>
+		<url-pattern>/data</url-pattern>
+	</servlet-mapping>
 </web-app>

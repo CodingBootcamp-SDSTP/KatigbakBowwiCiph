@@ -10,6 +10,7 @@ input[type=submit] {
 
 body {
 	margin: 0px; color: rgb(255, 255, 255); height: 100vh;
+	background-image: url("pic.jpg");
 }
 
 .cell {
@@ -17,9 +18,7 @@ body {
 }
 
 #cell1 {
-	width: 100%; height: 50%; background-color: red;
-	background-image: url("pic.jpg");
-	background-size: 100%;
+	width: 100%; height: 50%;
 }
 
 .cell > div {
@@ -27,8 +26,8 @@ body {
 }
 
 #cell2 {
-	width: 50%; height: 50%;
-	float: left; background-color: green;
+	width: 100%; height: 50%;
+	float: left;
 }
 
 #cell3 {

@@ -5,12 +5,14 @@
 	<script src="js/functionality.js"></script>
 </head>
 <body>
-	<form onsubmit="return validate()" method="post">
-		<i>Name: </i> <input type="text" id="name">
-		<br />
-		<i>Pass&ensp;: </i> <input type="password" id="password">
-		<br />
-		<a href="#" onclick="Click"><input type="submit" value="Submit" id="submit"></a>
-	</form>
+	<div id="container">
+		<div id="wrapper" class="login">
+			<form action="/Project/Login" method="POST">
+				<i>Enter your Admin Account: </i> <br /> <input type="text" id="name" name="name"> <br />
+				<i>Password&ensp;: </i> <br /> <input type="password" id="password" name="password"> <br /> <br />
+				<a href="#" onclick="Click"><input type="submit" value="login" id="submit"></a>
+			</form>
+		</div>
+	</div>
 	</body>
 </html>

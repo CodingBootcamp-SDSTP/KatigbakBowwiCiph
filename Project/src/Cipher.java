@@ -6,6 +6,7 @@ import java.sql.*;
 public class Cipher extends HttpServlet
 {
 	private static String cryptoText = "";
+	private static String enc = "";
 	private static int textShift = 0;
 	private static Connection v = null;
 	private static Statement stmt = null;
@@ -38,18 +39,41 @@ public class Cipher extends HttpServlet
 		return(v);
 	}
 
+	public static PrintWriter print(PrintWriter out) {
+		try {
+			out.print("<link rel='stylesheet' type='text/css' href='css/encrypt.css'>");
+			out.println("<div class='cell' id='cell1'>");
+			out.println("<div>");
+					out.println("<form action='./encrypt' method='GET'>");
+						out.println("<h3>Text to Encrypt/Decrypt:</h3>");
+						out.println("<input required type='text' name='encryptedText' id='textInput'>");
+						out.println("<h3>Number of Rotation:</h3>");
+						out.println("<input min='-255' max='255' step='1' required type='number' id='num_id' name='shiftNumber'/><br><br>");
+						out.println("<input type='submit' value='Submit' id='submit'>");
+						out.println("<a href='/Project/data'><p style='color:white;'>Click to see all encrypted data</p></a>");
+						out.println("<a href='/Project/DeciphData'><p style='color:white;'>Click to see all decrypted data</p></a>");
+					out.println("</form>");
+				out.println("</div>");
+			out.println("</div>");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return(out);
+	}
+
 	public void init() throws ServletException {
 		encryptText(cryptoText, textShift);
 		Connection c = connectdb();
 		if(c == null) {
-			System.out.println("Error connecting to your MySQL Database...");
+			System.out.println("Error connecting.");
 		}
 		else {
 			System.out.println("Connected.");
 		}
 	}
 
-	public static void readFromMySQLDB(Connection conn) {
+	public static void insertCiph(Connection conn) {
 		PreparedStatement stmt = null;
 		try {
 			stmt = conn.prepareStatement("INSERT INTO tbl_cipher(encryptedTxt, shiftNo) VALUES (?,?);");
@@ -66,47 +90,61 @@ public class Cipher extends HttpServlet
 		}
 	}
 
+	public static void insertDeciph(Connection conn) {
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement("INSERT INTO tbl_decipher(decryptedTxt, shiftNo) VALUES (?,?);");
+			stmt.setString(1, enc);
+			stmt.setInt(2, textShift);
+			stmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try { if (res != null) res.close(); } catch (Exception e) {};
+			try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+		}
+	}
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("text/html");
 		PrintWriter out = res.getWriter();
-		out.print("<link rel='stylesheet' type='text/css' href='css/encrypt.css'>");
-		out.println("<div class='cell' id='cell1'>");
-		out.println("<div>");
-				out.println("<form action='./encrypt' method='GET'>");
-					out.println("<h3>Text to Encrypt/Decrypt:</h3>");
-					out.println("<input required type='text' name='encryptedText' id='textInput'>");
-					out.println("<h3>Number of Rotation:</h3>");
-					out.println("<input min='-255' max='255' step='1' required type='number' id='num_id' name='shiftNumber'/><br><br>");
-					out.println("<input type='submit' value='Submit' id='submit'>");
-					out.println("<a href='/Project/data'><p>Click to see all encrypted data</p></a>");
-				out.println("</form>");
-			out.println("</div>");
-		out.println("</div>");
+		print(out);
 		cryptoText = req.getParameter("encryptedText").replaceAll("[ -+.^:,]", "");
 		String aString = req.getParameter("shiftNumber");
 		textShift = Integer.parseInt(aString);
-		readFromMySQLDB(v);
+		insertCiph(v);
 		try {
+			out.println("<div class='cell' id='cell2'>");
+				out.println("<div>");
 			if(cryptoText.matches("[a-zA-Z]+")) {
 				int shift = textShift;
-				out.println("<div class='cell' id='cell2'>");
-					out.println("<div>");
-						out.println("<h1>Cipher: </h1>" + "<h2>" + encryptText(cryptoText, shift) + "</h2>");
-					out.println("</div>");
-				out.println("</div>");
+				enc = encryptText(cryptoText, shift);
+				insertDeciph(v);
+				out.println("<h1>Cipher: </h1> <h2>" + enc + "</h2>");
 			}
 			else {
-				out.println("<div class='cell' id='cell2'><div><h1>Text must be letters only.<h1></div></div>");
+				out.println("<h1>Text must be letters only.</h1>");
 				return;
 			}
+				out.println("</div>");
+			out.println("</div>");
 		}
 		catch(Exception e) {
-			out.println("Invalid input: " + e);
+			e.printStackTrace();
 		}
+	}
+
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		res.setContentType("text/html");
+		PrintWriter out = res.getWriter();
+		print(out);
 	}
 
 	public void destroy() {
 		cryptoText = null;
+		enc = null;
 		textShift = 0;
 		v = null;
 		stmt = null;

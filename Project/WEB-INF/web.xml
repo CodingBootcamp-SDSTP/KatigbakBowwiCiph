@@ -18,4 +18,20 @@
 		<servlet-name>Data</servlet-name>
 		<url-pattern>/data</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>Login</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/Login</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Deciph</servlet-name>
+		<servlet-class>Deciph</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Deciph</servlet-name>
+		<url-pattern>/DeciphData</url-pattern>
+	</servlet-mapping>
 </web-app>
